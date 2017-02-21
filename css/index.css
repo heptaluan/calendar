@@ -6,56 +6,18 @@ a:hover{color:#07f;}
 i,b,em{font-style:normal;}
 
 /* box */
-.myDate {
-    width: 800px;
-    margin: 50px auto 0;
-    padding: 25px;
-    border: 1px solid #e6e6e6;
-    overflow: hidden;
-    box-sizing: border-box;
-}
+.myDate {width: 800px;margin: 50px auto 0;padding: 25px;border: 1px solid #e6e6e6;overflow: hidden;box-sizing: border-box;}
 
 /* 日历 */
-.Mytime {
-    box-sizing: border-box;
-    width: 355px;
-    height: 355px;
-    padding: 10px;
-    float: left;
-    border: 1px solid #e6e6e6;
-}
+.Mytime {box-sizing: border-box;width: 355px;height: 355px;padding: 10px;float: left;border: 1px solid #e6e6e6;}
 
 /* 日历标题 */
-.dateTitle h3, .dateTitle h4 {
-    display: inline-block;
-}
+.dateTitle h3, .dateTitle h4 {display: inline-block;}
+.dateTitle h3 {margin-right: 10px;}
+.dateList .week {overflow: hidden;}
+.dateList .week span {width: 47px;height: 47px;line-height: 47px;float: left;text-align: center;}
+.dateList .day {overflow: hidden;margin-top: 10px;padding-right: 1px;padding-bottom: 1px;}
+.dateList .day span {width: 45px;height: 45px;line-height: 45px;border: 1px solid #e6e6e6;float: left;text-align: center;margin-right: -1px;margin-bottom: -1px;display: inline-block;}
 
-.dateTitle h3 {
-    margin-right: 10px;
-}
-
-.dateList .week {
-    overflow: hidden;
-}
-
-.dateList .week span {
-    width: 47px;
-    height: 47px;
-    line-height: 47px;
-    float: left;
-    text-align: center;
-}
-
-.dateList .day {
-    overflow: hidden;
-    margin-top: 10px;
-}
-
-.dateList .day span {
-    width: 45px;
-    height: 45px;
-    line-height: 45px;
-    border: 1px solid #e6e6e6;
-    float: left;
-    text-align: center;
-}
+/* 日历中用到的样式 */
+.placeholderSpan {border: 1px solid transparent !important;}
