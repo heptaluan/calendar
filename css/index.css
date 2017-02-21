@@ -12,8 +12,7 @@ i,b,em{font-style:normal;}
 .Mytime {box-sizing: border-box;width: 355px;height: 355px;padding: 10px;float: left;border: 1px solid #e6e6e6;}
 
 /* 日历标题 */
-.dateTitle h3, .dateTitle h4 {display: inline-block;}
-.dateTitle h3 {margin-right: 10px;}
+.dateTitle {text-align: center;font-size: 14px;color: #333;font-weight: bold;}
 .dateList .week {overflow: hidden;}
 .dateList .week span {width: 47px;height: 47px;line-height: 47px;float: left;text-align: center;}
 .dateList .day {overflow: hidden;margin-top: 10px;padding-right: 1px;padding-bottom: 1px;}
@@ -21,3 +20,7 @@ i,b,em{font-style:normal;}
 
 /* 日历中用到的样式 */
 .placeholderSpan {border: 1px solid transparent !important;}
+.Mytime {position: relative;overflow: hidden;}
+.Mytime #prev, .Mytime #next {cursor: pointer;width: 25px;height: 25px;text-align: center;line-height: 20px;}
+.Mytime #prev {position: absolute;left: 0;top: 0;}
+.Mytime #next {position: absolute;right: 0;top: 0;}
