@@ -9,34 +9,7 @@
 
 
     <div class="myDate" id="myDate">
-
-        <!-- 左右月份切换 -->
-        <span id="prev"></span>
-        <span id="next"></span>
-
-        <!-- 第一个日历 -->
-        <div class="Mytime" id="first">
-
-            <div class="dateTitle">
-                <h3 class="year"><span>2000</span>年</h3>
-                <h4 class="month"><span>1</span>月</h4>
-            </div>
-
-            <div class="dateList">
-
-                <!-- 星期 -->
-                <div class="week">
-                    <span>一</span><span>二</span><span>三</span> <span>四</span><span>五</span><span>六</span><span>日</span>
-                </div>
-
-                <!-- 日期 -->
-                <div class="day">
-
-                </div>
-            </div>
-
-        </div>     
-        
+            
     </div>
 
 <script src="http://www.hanekaoru.com/jquery.js"></script> 
@@ -44,12 +17,9 @@
 <script>
     $(function(){
 
-        // 传入 3 个参数，年份，月份，js 对象（非 jQuery 对象）
-        var year = new Date().getFullYear();
-        var month = new Date().getMonth() + 1;
-        var box = document.querySelector(".day");
-
-        var myDate = new MyDate(box, year, month);
+        var myDate = new MyDate({
+            // ...
+        });
 
     })
 </script>
