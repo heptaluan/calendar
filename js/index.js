@@ -1,18 +1,31 @@
 function MyDate(options) { 
 
+    this.init(options);    
+
+}
+
+MyDate.prototype.init = function (options) {
+
     var defaults = {
         box: document.querySelector("#myDate"),  // 日历容器
         year: new Date().getFullYear(),  // 默认为系统年份
         month: new Date().getMonth() + 1, // 默认为系统月份
-        calendars: 1  // 传入的日历个数，默认为 2
+        calendars: 2  // 传入的日历个数，默认为 2
     }
 
     // 合并参数
     var opts = $.extend({}, defaults, options);
 
-    // 初始化日历
-    this.createCal(opts.box, opts.year, opts.month, opts.calendars);
+    // 初始化日历（根据参数生成一个还是两个日历）
+    if (opts.calendars == 1) {
+        this.createCal(opts.box, opts.year, opts.month);
+    } else {
+        this.createCalDouble(opts.box, opts.year, opts.month);
+    }
 
+    // 绑定切换点击事件
+    this.prev(opts.box, opts.year, opts.month)
+    this.next(opts.box, opts.year, opts.month)
 
 }
 
@@ -51,77 +64,119 @@ MyDate.prototype.monthDay = function (year, month) {
     return everyMonth[month - 1];
 };
 
-// 生成日历
-MyDate.prototype.createCal = function (box, year, month, calendars) {
+// 生成单日历
+MyDate.prototype.createCal = function (box, year, month) {
 
-    // 单日历
-    if (calendars == 1) {
-        // 获取当前月总共有多少天
-        var allDays = this.monthDay(year, month);
+    // 获取当前月总共有多少天
+    var allDays = this.monthDay(year, month);
 
-        // 获取当前月第一天星期几
-        var firstDay = this.weekDay(year, month);
-        
-        if (firstDay == 7) {
-            firstDay = 0;
-        }
-
-
-        // 前置占位符
-        var placeholderSpan = "";
-        for (var i = 0; i < Number(firstDay) - 1; i++) {
-            placeholderSpan += '<span class="placeholderSpan"><i></i></span>';
-        }
-
-        // 生成日历
-        var day = "";
-        for (var i = 1; i <= allDays; i++) { 
-            day += '<span><i>' + i + '</i></span>'
-        }
-
-        var myCalendar = '<div class="Mytime" id="first"><span id="prev">←</span><span id="next">→</span>' + 
-                '<div class="dateTitle"><em class="year">' + year + '</em> 年 <em class="month">' + month + '</em> 月</div>' + 
-                '<div class="dateList"><div class="week">' + 
-                '<span>一</span><span>二</span><span>三</span> <span>四</span><span>五</span><span>六</span><span>日</span></div>' + 
-                '<div class="day">' + placeholderSpan + day + '</div></div></div> ';
-                
-        box.innerHTML = myCalendar;
+    // 获取当前月第一天星期几
+    var firstDay = this.weekDay(year, month);
+    
+    if (firstDay == 7) {
+        firstDay = 0;
     }
 
-    // 双日历
-    if (calendars == 2) {
-        // 获取当前月总共有多少天
-        var allDays = this.monthDay(year, month);
 
-        // 获取当前月第一天星期几
-        var firstDay = this.weekDay(year, month);
-        
-        if (firstDay == 7) {
-            firstDay = 0;
-        }
-
-
-        // 前置占位符
-        var placeholderSpan = "";
-        for (var i = 0; i < Number(firstDay) - 1; i++) {
-            placeholderSpan += '<span class="placeholderSpan"><i></i></span>';
-        }
-
-        // 生成日历
-        var day = "";
-        for (var i = 1; i <= allDays; i++) { 
-            day += '<span><i>' + i + '</i></span>'
-        }
-
-        var myCalendar = '<div class="Mytime" id="first">' + 
-                '<div class="dateTitle"><em class="year">' + year + '</em> 年 <em class="month">' + month + '</em> 月</div>' + 
-                '<div class="dateList"><div class="week">' + 
-                '<span>一</span><span>二</span><span>三</span> <span>四</span><span>五</span><span>六</span><span>日</span></div>' + 
-                '<div class="day">' + placeholderSpan + day + '</div></div></div> ';
-                
-        box.innerHTML = myCalendar;
+    // 前置占位符
+    var placeholderSpan = "";
+    for (var i = 0; i < Number(firstDay) - 1; i++) {
+        placeholderSpan += '<span class="placeholderSpan"><i></i></span>';
     }
+
+    // 生成日历
+    var day = "";
+    for (var i = 1; i <= allDays; i++) { 
+        day += '<span><i>' + i + '</i></span>'
+    }
+
+    var myCalendar = '<div class="Mytime"><span id="prev">←</span><span id="next">→</span>' + 
+            '<div class="dateTitle"><em class="year">' + year + '</em> 年 <em class="month">' + month + '</em> 月</div>' + 
+            '<div class="dateList"><div class="week">' + 
+            '<span>一</span><span>二</span><span>三</span> <span>四</span><span>五</span><span>六</span><span>日</span></div>' + 
+            '<div class="day">' + placeholderSpan + day + '</div></div></div> ';
+            
+    box.innerHTML = myCalendar;
     
 }
+
+// 生成双日历
+MyDate.prototype.createCalDouble = function (box, year, month) {
+    var double = '<div class="first" id="first"></div><div class="last" id="last"></div>';
+    box.innerHTML = double;
+
+    var first = document.querySelector("#first");
+    var last = document.querySelector("#last");
+
+    // 生成左侧日历
+    this.createCal(first, year, month);
+
+    // 生成右侧日历
+    if (month >= 12) {
+        this.createCal(last, year + 1, month - 11);
+    } else {
+        this.createCal(last, year, month + 1);
+    }
+    
+    // 绑定切换事件
+    this.prev(box, year, month)
+    this.next(box, year, month)
+
+    // 按钮只保留一组
+    document.querySelectorAll("#next")[0].style.display = "none"
+    document.querySelectorAll("#prev")[1].style.display = "none"  
+    
+}
+
+// 上一个月点击事件
+MyDate.prototype.prev = function (box, year, month) {
+
+    // 绑定上一个月点击事件
+    var prev = document.querySelector("#prev");
+    var _this = this;
+
+    prev.addEventListener("click", function () {
+
+        var y = year;
+        var m = month;
+
+        m--;
+
+        if (m == 0) {
+            m = 12;
+            y = y - 1;
+        }
+
+        _this.createCalDouble(box, y, m);
+
+    }, false)
+
+}
+
+// 下一个月点击事件
+MyDate.prototype.next = function (box, year, month) {
+
+    // 绑定上一个月点击事件
+    var next = document.querySelectorAll("#next")[1];
+    var _this = this;
+
+    next.addEventListener("click", function () {
+
+        var y = year;
+        var m = month;
+
+        m++;
+
+        if (m == 13) {
+            m = 1;
+            y = y + 1;
+        }
+
+        _this.createCalDouble(box, y, m);
+
+    }, false)
+
+}
+
 
 
