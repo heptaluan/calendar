@@ -27,6 +27,9 @@ MyDate.prototype.init = function (options) {
     this.prev(opts.box, opts.year, opts.month)
     this.next(opts.box, opts.year, opts.month)
 
+    // 绑定选中事件
+    this.intervalClick(opts.box, opts.year, opts.month);
+
 }
 
 // 返回传入的 x年-x月 的第一天是星期几
@@ -73,6 +76,7 @@ MyDate.prototype.createCal = function (box, year, month) {
     // 获取当前月第一天星期几
     var firstDay = this.weekDay(year, month);
     
+    // 如果为星期一，默认从第一个开始排
     if (firstDay == 7) {
         firstDay = 0;
     }
@@ -131,8 +135,9 @@ MyDate.prototype.createCalDouble = function (box, year, month) {
 // 上一个月点击事件
 MyDate.prototype.prev = function (box, year, month) {
 
-    // 绑定上一个月点击事件
+    // 获取事件元素
     var prev = document.querySelector("#prev");
+    // 绑定 this
     var _this = this;
 
     prev.addEventListener("click", function () {
@@ -156,8 +161,9 @@ MyDate.prototype.prev = function (box, year, month) {
 // 下一个月点击事件
 MyDate.prototype.next = function (box, year, month) {
 
-    // 绑定上一个月点击事件
+    // 获取事件元素
     var next = document.querySelectorAll("#next")[1];
+    // 绑定 this
     var _this = this;
 
     next.addEventListener("click", function () {
@@ -178,5 +184,41 @@ MyDate.prototype.next = function (box, year, month) {
 
 }
 
+// 点击选中事件
+MyDate.prototype.intervalClick = function (box, year, month) {
+
+    var i = $(box).find("i");
+    var lock = true;
+    var start = 0;
+    var end = 0;
+    var min, max;
+
+    i.on("click", function () {
+
+        if (lock) {
+            i.removeClass("start end interval");
+            $(this).addClass("start");
+
+            start = $(this).index("i")
+
+            lock = false;
+            
+        } else {
+            $(this).addClass("end");
+
+            end = $(this).index("i");
+            
+            min = start < end ? start : end;
+            max = start > end ? start : end;
+
+            i.slice(min + 1 , max).addClass("interval")
+
+            lock = true;
+        }
+        
+    })
+}
+
+// 禁止点击事件
 
 
