@@ -76,7 +76,7 @@ MyDate.prototype.monthDay = function (year, month) {
     if (month == 2) {
         var bissextile = [1952, 1956, 1960, 1964, 1968, 1972, 1976, 1980, 1984, 1988, 1992, 1996, 2000, 2004, 2008, 2012, 2016, 2020, 2024, 2028, 2032, 2036, 2040, 2044, 2048];
 
-        for (let i = 0; i < bissextile.length; i++) {
+        for (var i = 0; i < bissextile.length; i++) {
             if (year == bissextile[i]) {
                 everyMonth[1] = 29;
             }
