@@ -1,8 +1,6 @@
 日历轮子
 
-----
-
-食用方法（配置参数）：
+使用方法
 
 ```js
 var myDate = new MyDate({
@@ -23,10 +21,10 @@ var myDate = new MyDate({
 ----
 
 
-新增一个移动端版本的简易日历
+新增一个移动端版本的简易单日历
 
 源码见 `App` 目录，纯原生 `js` 完成，无任何依赖，使用方法和上面一样
 
 预览
 
-![cal](https://github.com/hanekaoru/myCalendar/App/cal.png)
+![cal](https://github.com/hanekaoru/myCalendar/blob/master/App/cal.png)
