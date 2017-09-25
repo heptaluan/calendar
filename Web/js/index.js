@@ -2,7 +2,7 @@
  *=======================================================================
  *
  * @created： by VSC
- * @author： shaobo（https://github.com/hanekaoru/myCalendar）
+ * @author： shaobo（http://hanekaoru.com/）
  * @version：  2017-02-20
  * 
  * 2017-02-20  大体框架搭建
@@ -76,7 +76,7 @@ MyDate.prototype.monthDay = function (year, month) {
     if (month == 2) {
         var bissextile = [1952, 1956, 1960, 1964, 1968, 1972, 1976, 1980, 1984, 1988, 1992, 1996, 2000, 2004, 2008, 2012, 2016, 2020, 2024, 2028, 2032, 2036, 2040, 2044, 2048];
 
-        for (let i = 0; i < bissextile.length; i++) {
+        for (var i = 0; i < bissextile.length; i++) {
             if (year == bissextile[i]) {
                 everyMonth[1] = 29;
             }
@@ -102,13 +102,13 @@ MyDate.prototype.createCal = function (box, year, month, calendars) {
 
     // 前置占位符
     var placeholderSpan = "";
-    for (let i = 0; i < Number(firstDay) - 1; i++) {
+    for (var i = 0; i < Number(firstDay) - 1; i++) {
         placeholderSpan += '<span class="placeholderSpan"></span>';
     }
 
     // 生成日历
     var day = "";
-    for (let i = 1; i <= allDays; i++) { 
+    for (var i = 1; i <= allDays; i++) { 
         day += '<span><i>' + i + '</i></span>'
     }
 

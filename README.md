@@ -1,30 +1,21 @@
-日历轮子
+一个简易的日历插件
+
+分为网页版（`Web`）和移动端版本（`App`）
+
+移动端版本为精简版本，纯原生 `js` 实现，无任何依赖
 
 使用方法
 
 ```js
-var myDate = new MyDate({
-    // box: 日历容器（document.querySelector("#myDate")）
-    // year: 年 （2017）
-    // month: 月 （02）
-    // calendars： 日历个数（1 和 2）
-});
+var myDate = new MyDate();
 ```
 
-预览地址：http://hanekaoru.com/demo/project/myCalendar/index.html
+
+网页版预览
+
+![Web](https://github.com/hanekaoru/myCalendar/blob/master/Web.png)
 
 
-----
+移动端预览
 
-----
-
-----
-
-
-新增一个移动端版本的简易单日历
-
-源码见 `App` 目录，纯原生 `js` 完成，无任何依赖，使用方法和上面一样
-
-预览
-
-![cal](https://github.com/hanekaoru/myCalendar/blob/master/App/cal.png)
+![App](https://github.com/hanekaoru/myCalendar/blob/master/App.png)
