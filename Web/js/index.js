@@ -2,29 +2,23 @@
  *=======================================================================
  *
  * @created： by VSC
- * @author： shaobo（http://hanekaoru.com/）
+ * @author： hanekaoru https://github.com/hanekaoru/Calendar-Plugin
  * @version：  2017-02-20
- * 
- * 2017-02-20  大体框架搭建
- * 2017-02-21  日历渲染，生成日历，添加默认参数以及交互事件
- * 2017-02-22  新增单双日历切换
- * 待续...
- * 
+ *  
  *=======================================================================
  */
-function MyDate(options) { 
-
-    this.init(options);    
-
+function MyDate(options) {
+    // 初始化
+    this.init(options);
 }
 
 MyDate.prototype.init = function (options) {
 
     var defaults = {
         box: document.querySelector("#myDate"),  // 日历容器
-        year: new Date().getFullYear(),  // 默认为系统年份
-        month: new Date().getMonth() + 1, // 默认为系统月份
-        calendars: 2  // 传入的日历个数，默认为 2
+        year: new Date().getFullYear(),          // 默认为系统年份
+        month: new Date().getMonth() + 1,        // 默认为系统月份
+        calendars: 2                             // 传入的日历个数，默认为 2
     }
     
     // 合并参数
@@ -33,19 +27,21 @@ MyDate.prototype.init = function (options) {
     // 初始化日历（根据参数生成一个还是两个日历）
     if (opts.calendars == 1) {
         this.createCal(opts.box, opts.year, opts.month, opts.calendars);
+        // 绑定单日历切换点击事件
+        this.prev(opts.box, opts.year, opts.month, 1)
+        this.next(opts.box, opts.year, opts.month, 1)
     } else {
         this.createCalDouble(opts.box, opts.year, opts.month, opts.calendars);
+        // 绑定双日历切换点击事件
+        this.prev(opts.box, opts.year, opts.month, 2)
+        this.next(opts.box, opts.year, opts.month, 2)
     }
-
-    // 绑定切换点击事件
-    this.prev(opts.box, opts.year, opts.month)
-    this.next(opts.box, opts.year, opts.month)
 
     // 绑定选中事件
     this.intervalClick(opts.box);
 
     // 绑定删除事件
-    this.unClick(opts.box, opts.year, opts.month);
+    this.changeToday(opts.box, opts.year, opts.month);
 
 }
 
@@ -126,7 +122,6 @@ MyDate.prototype.createCal = function (box, year, month, calendars) {
 
     // 绑定点击事件
     this.intervalClick(box);
-    
 }
 
 // 生成双日历
@@ -158,7 +153,6 @@ MyDate.prototype.createCalDouble = function (box, year, month, calendars) {
     // 按钮只保留一组
     document.querySelectorAll("#next")[0].style.display = "none"
     document.querySelectorAll("#prev")[1].style.display = "none"  
-    
 }
 
 // 上一个月点击事件
@@ -210,6 +204,8 @@ MyDate.prototype.prev = function (box, year, month, calendars) {
         }, false)
     }
 
+    // 绑定删除事件
+    this.changeToday(box, year, month);
 }
 
 // 下一个月点击事件
@@ -257,7 +253,9 @@ MyDate.prototype.next = function (box, year, month, calendars) {
 
         }, false)
     }
-    
+
+    // 绑定删除事件
+    this.changeToday(box, year, month);
 
 }
 
@@ -331,21 +329,22 @@ MyDate.prototype.intervalClick = function (box) {
             // 重置为起点
             lock = true;
         }
-        
     })
 }
 
 // 禁止点击事件
-MyDate.prototype.unClick = function (box, year, month) {
+MyDate.prototype.changeToday = function (box, year, month) {
     
-    // 获取当前日期
-    var today = new Date().getDate();
+    if (month === (new Date().getMonth() + 1)) {
+        // 获取当前日期
+        var today = new Date().getDate();
 
-    // 获取所有的 i 
-    var i = $(box).find("i");
+        // 获取所有的 i 
+        var i = $(box).find("i");
 
-    // 为当前日期之前取消点击事件，添加 class
-    i.slice(0, today - 1).addClass("unClick").off("click")
+        // 为当前日期之前取消点击事件，添加 class
+        i.slice(today - 1, today).addClass("changeToday")
+    }
 }
 
 // 参数补零
