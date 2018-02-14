@@ -16,7 +16,7 @@ i,b,em{font-style:normal;}
 .dateList .week {overflow: hidden;}
 .dateList .week span {width: 45px;height: 45px;line-height: 45px;float: left;text-align: center;box-sizing: border-box;}
 .dateList .day {overflow: hidden;margin-top: 10px;padding-right: 1px;padding-bottom: 1px;}
-.dateList .day span {width: 45px;height: 45px;line-height: 45px;border: 1px solid #e6e6e6;float: left;text-align: center;margin-right: -1px;margin-bottom: -1px;display: inline-block;}
+.dateList .day span {width: 45px;height: 45px;line-height: 45px;border: 1px solid #e6e6e6;float: left;text-align: center;margin-right: -1px;margin-bottom: -1px;display: inline-block; cursor: pointer;}
 .dateList .day span i {display: inline-block;width: 100%;height: 100%;box-sizing: border-box;}
 
 /* 日历中用到的样式 */
@@ -32,4 +32,4 @@ i,b,em{font-style:normal;}
 .start {background: #666;}
 .end {background: #666;}
 .interval {background: #999;}
-.unClick {color: #ccc;}
+.changeToday {color: red; border: 1px solid red;}
